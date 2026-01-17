@@ -1,5 +1,7 @@
 #if HAS_TLD_REFS
+#if HAS_TMPRO
 using TMPro;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -96,7 +98,11 @@ public sealed class UIScanner
             return "Slider";
         }
 
-        if (gameObject.GetComponent<Dropdown>() != null || gameObject.GetComponent<TMP_Dropdown>() != null)
+        if (gameObject.GetComponent<Dropdown>() != null
+#if HAS_TMPRO
+            || gameObject.GetComponent<TMP_Dropdown>() != null
+#endif
+            )
         {
             return "Dropdown";
         }
@@ -111,7 +117,11 @@ public sealed class UIScanner
             return "ListItem";
         }
 
-        if (gameObject.GetComponent<Text>() != null || gameObject.GetComponent<TMP_Text>() != null)
+        if (gameObject.GetComponent<Text>() != null
+#if HAS_TMPRO
+            || gameObject.GetComponent<TMP_Text>() != null
+#endif
+            )
         {
             return "Label";
         }
@@ -155,12 +165,14 @@ public sealed class UIScanner
                 return dropdown.options[dropdown.value].text;
             }
 
+#if HAS_TMPRO
             var tmpDropdown = gameObject.GetComponent<TMP_Dropdown>();
             if (tmpDropdown != null && tmpDropdown.options.Count > 0 && tmpDropdown.value >= 0 &&
                 tmpDropdown.value < tmpDropdown.options.Count)
             {
                 return tmpDropdown.options[tmpDropdown.value].text;
             }
+#endif
         }
 
         return string.Empty;
@@ -199,11 +211,13 @@ public sealed class UIScanner
             return text.text.Trim();
         }
 
+#if HAS_TMPRO
         var tmpText = gameObject.GetComponent<TMP_Text>();
         if (tmpText != null && !string.IsNullOrWhiteSpace(tmpText.text))
         {
             return tmpText.text.Trim();
         }
+#endif
 
         return string.Empty;
     }
@@ -216,11 +230,13 @@ public sealed class UIScanner
             return text.text.Trim();
         }
 
+#if HAS_TMPRO
         var tmpText = gameObject.GetComponentInChildren<TMP_Text>();
         if (tmpText != null && !string.IsNullOrWhiteSpace(tmpText.text))
         {
             return tmpText.text.Trim();
         }
+#endif
 
         return string.Empty;
     }

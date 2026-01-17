@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Interop\\Tolk.dll" Condition="Exists('Interop\\Tolk.dll')" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="Interop\Tolk.dll" Condition="Exists('Interop\Tolk.dll')"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Speech" Version="10.0.2" />
   </ItemGroup>
 
   <!-- MelonLoader stubs removed; reference the real MelonLoader assembly from the build environment. -->

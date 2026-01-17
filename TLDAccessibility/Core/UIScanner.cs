@@ -23,9 +23,9 @@ public sealed class UIScanner
         };
     }
 
-    private static AccessibleElement? ResolveFocusedElement()
+    private static AccessibleElement ResolveFocusedElement()
     {
-        GameObject? selected = null;
+        GameObject selected = null;
         try
         {
             selected = EventSystem.current?.currentSelectedGameObject;
@@ -56,7 +56,7 @@ public sealed class UIScanner
         };
     }
 
-    private static string ResolveScreenId(AccessibleElement? focused)
+    private static string ResolveScreenId(AccessibleElement focused)
     {
         if (focused is null || string.IsNullOrWhiteSpace(focused.Path))
         {

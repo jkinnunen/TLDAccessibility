@@ -8,9 +8,9 @@ public sealed class NarrationController
 {
     private const float FocusDebounceSeconds = 0.15f;
     private readonly UIScanner _scanner = new();
-    private string? _pendingFocusPath;
+    private string _pendingFocusPath;
     private float _pendingFocusStartTime;
-    private string? _lastSpokenFocusPath;
+    private string _lastSpokenFocusPath;
 
     public void Tick()
     {

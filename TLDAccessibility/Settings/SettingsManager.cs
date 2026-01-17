@@ -11,13 +11,13 @@ public static class SettingsManager
     };
 
     private static readonly object SyncRoot = new();
-    private static ISettingsProvider? _settingsProvider;
+    private static ISettingsProvider _settingsProvider;
 
     public static SettingsModel CurrentSettings { get; private set; } = SettingsModel.CreateDefaults();
 
     public static SettingsProfile ActiveProfile => CurrentSettings.GetActiveProfile();
 
-    public static event Action<SettingsProfile>? ProfileChanged;
+    public static event Action<SettingsProfile> ProfileChanged;
 
     public static void Initialize()
     {

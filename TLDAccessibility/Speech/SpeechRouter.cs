@@ -13,6 +13,7 @@ public static class SpeechRouter
     private static SpeechPriority _currentPriority = SpeechPriority.Normal;
     private static bool _hasSelfTested;
     private static string _lastSpokenUtterance;
+    private static SpeechDiagnosticsSnapshot _diagnosticsSnapshot;
 
     public static SpeechBackendMode BackendMode { get; private set; } = SpeechBackendMode.Auto;
     public static int VerbosityLevel { get; private set; } = 3;
@@ -40,6 +41,7 @@ public static class SpeechRouter
             }
 
             _lastSpokenUtterance = text;
+            DiagnosticsManager.TrackSpeechEvent($"Speak (priority={priority}, interrupt={interrupt}): {text}");
 
             var shouldInterrupt = interrupt || (AllowInterruptByHigherPriority && priority < _currentPriority);
             if (_isSpeaking && shouldInterrupt)
@@ -87,6 +89,14 @@ public static class SpeechRouter
         }
     }
 
+    public static SpeechDiagnosticsSnapshot GetDiagnosticsSnapshot()
+    {
+        lock (SyncRoot)
+        {
+            return _diagnosticsSnapshot;
+        }
+    }
+
     public static void Reconfigure(SettingsProfile profile)
     {
         lock (SyncRoot)
@@ -121,45 +131,70 @@ public static class SpeechRouter
         UnsubscribeFromCompletionEvents();
         DisposeSpeechService();
 
-        _speechService = SelectService(profile);
+        var selection = SelectService(profile);
+        _speechService = selection.Service;
         _completableSpeechService = _speechService as ICompletableSpeechService;
         SubscribeToCompletionEvents();
+
+        _diagnosticsSnapshot = new SpeechDiagnosticsSnapshot(
+            BackendMode,
+            _speechService.GetType().Name,
+            _speechService.IsAvailable,
+            selection.TolkAvailable,
+            selection.SapiAvailable,
+            selection.VoiceName,
+            _speechService.DiagnosticsSummary());
 
         ModLogger.Info($"Speech backend selected: {_speechService.GetType().Name} (available={_speechService.IsAvailable}).");
     }
 
-    private static ISpeechService SelectService(SettingsProfile profile)
+    private static SpeechBackendSelection SelectService(SettingsProfile profile)
     {
         var speechSettings = profile.Speech;
         return BackendMode switch
         {
-            SpeechBackendMode.ScreenReader => CreateTolkService(),
-            SpeechBackendMode.SAPI5 => CreateSapiService(speechSettings),
+            SpeechBackendMode.ScreenReader => SelectTolkOnly(),
+            SpeechBackendMode.SAPI5 => SelectSapiOnly(speechSettings),
             _ => SelectAutoService(speechSettings)
         };
     }
 
-    private static ISpeechService SelectAutoService(SpeechSettings speechSettings)
+    private static SpeechBackendSelection SelectTolkOnly()
     {
-        var tolk = CreateTolkService();
-        if (tolk.IsAvailable)
-        {
-            return tolk;
-        }
-
-        var sapi = CreateSapiService(speechSettings);
-        if (sapi.IsAvailable)
-        {
-            return sapi;
-        }
-
-        return new NoOpSpeechService();
+        var tolk = CreateTolkService(out var tolkAvailable);
+        return new SpeechBackendSelection(tolk, tolkAvailable, null, null);
     }
 
-    private static ISpeechService CreateTolkService()
+    private static SpeechBackendSelection SelectSapiOnly(SpeechSettings speechSettings)
+    {
+        var sapi = CreateSapiService(speechSettings, out var sapiAvailable);
+        var voiceName = (sapi as SapiSpeechService)?.VoiceName ?? string.Empty;
+        return new SpeechBackendSelection(sapi, null, sapiAvailable, voiceName);
+    }
+
+    private static SpeechBackendSelection SelectAutoService(SpeechSettings speechSettings)
+    {
+        var tolk = CreateTolkService(out var tolkAvailable);
+        if (tolkAvailable)
+        {
+            return new SpeechBackendSelection(tolk, tolkAvailable, null, null);
+        }
+
+        var sapi = CreateSapiService(speechSettings, out var sapiAvailable);
+        if (sapiAvailable)
+        {
+            var voiceName = (sapi as SapiSpeechService)?.VoiceName ?? string.Empty;
+            return new SpeechBackendSelection(sapi, tolkAvailable, sapiAvailable, voiceName);
+        }
+
+        return new SpeechBackendSelection(new NoOpSpeechService(), tolkAvailable, sapiAvailable, string.Empty);
+    }
+
+    private static ISpeechService CreateTolkService(out bool available)
     {
         var service = new TolkSpeechService();
-        if (!service.IsAvailable)
+        available = service.IsAvailable;
+        if (!available)
         {
             service.Dispose();
             return new NoOpSpeechService();
@@ -168,10 +203,11 @@ public static class SpeechRouter
         return service;
     }
 
-    private static ISpeechService CreateSapiService(SpeechSettings speechSettings)
+    private static ISpeechService CreateSapiService(SpeechSettings speechSettings, out bool available)
     {
         var service = new SapiSpeechService(speechSettings);
-        if (!service.IsAvailable)
+        available = service.IsAvailable;
+        if (!available)
         {
             service.Dispose();
             return new NoOpSpeechService();
@@ -227,6 +263,7 @@ public static class SpeechRouter
         Queue.Clear();
         _speechService.Stop();
         _isSpeaking = false;
+        DiagnosticsManager.TrackSpeechEvent("Stop");
     }
 
     private static void SubscribeToCompletionEvents()
@@ -259,4 +296,19 @@ public static class SpeechRouter
     }
 
     private readonly record struct SpeechRequest(string Text, SpeechPriority Priority);
+
+    public readonly record struct SpeechDiagnosticsSnapshot(
+        SpeechBackendMode BackendMode,
+        string BackendName,
+        bool BackendAvailable,
+        bool? TolkAvailable,
+        bool? SapiAvailable,
+        string VoiceName,
+        string BackendDetails);
+
+    private readonly record struct SpeechBackendSelection(
+        ISpeechService Service,
+        bool? TolkAvailable,
+        bool? SapiAvailable,
+        string VoiceName);
 }

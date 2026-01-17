@@ -64,6 +64,12 @@ public static class ModLogger
 
         melonSink?.Invoke(line);
         _fileLogger?.WriteLine(line);
+
+        if (string.Equals(level, "WARN", StringComparison.Ordinal)
+            || string.Equals(level, "ERROR", StringComparison.Ordinal))
+        {
+            DiagnosticsManager.TrackError(level, message);
+        }
     }
 }
 

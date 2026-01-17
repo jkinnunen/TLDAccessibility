@@ -1,3 +1,4 @@
+using TLDAccessibility.Diagnostics;
 using TLDAccessibility.Speech;
 
 namespace TLDAccessibility.Core;
@@ -17,6 +18,7 @@ public sealed class AccessibilityCommandHandlers
         _commandBus.RegisterHandler(AccessibilityCommand.RepeatLast, HandleRepeatLast);
         _commandBus.RegisterHandler(AccessibilityCommand.ReadScreen, HandleReadScreen);
         _commandBus.RegisterHandler(AccessibilityCommand.ReadStatusSummary, HandleReadStatusSummary);
+        _commandBus.RegisterHandler(AccessibilityCommand.DumpDiagnostics, HandleDumpDiagnostics);
     }
 
     private void HandleRepeatLast()
@@ -34,5 +36,11 @@ public sealed class AccessibilityCommandHandlers
     {
         var summary = SummaryProvider.GetStatusSummary();
         SpeechRouter.Speak(summary, SpeechPriority.Normal, interrupt: true);
+    }
+
+    private void HandleDumpDiagnostics()
+    {
+        DiagnosticsManager.DumpDiagnostics();
+        SpeechRouter.Speak("Diagnostics report saved.", SpeechPriority.Normal, interrupt: true);
     }
 }

@@ -18,6 +18,7 @@ public sealed class HotkeyDispatcher
         TryDispatchHotkey(hotkeys.RepeatLast, AccessibilityCommand.RepeatLast);
         TryDispatchHotkey(hotkeys.ReadScreen, AccessibilityCommand.ReadScreen);
         TryDispatchHotkey(hotkeys.ReadStatusSummary, AccessibilityCommand.ReadStatusSummary);
+        TryDispatchHotkey(hotkeys.DumpDiagnostics, AccessibilityCommand.DumpDiagnostics);
     }
 
     private bool IsHotkeyPressed(string keybind)

@@ -37,6 +37,7 @@ public sealed class SapiSpeechService : ISpeechService, ICompletableSpeechServic
     public event EventHandler SpeechCompleted = delegate { };
 
     public bool IsAvailable => _synthesizer is not null && OperatingSystem.IsWindows();
+    public string VoiceName => _voiceName;
 
     public void Speak(string text, SpeechPriority priority, bool interrupt)
     {

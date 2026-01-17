@@ -119,17 +119,9 @@ public sealed class NarrationController
         var withinDebounce = lastEntry != null && now - lastEntry.SpokenAt < debounceSeconds;
         var utteranceUnchanged = lastEntry != null && string.Equals(lastEntry.Utterance, utterance, StringComparison.Ordinal);
 
-        if (utteranceUnchanged)
+        if (utteranceUnchanged && withinDebounce && !forceSpeak)
         {
-            if (forceSpeak)
-            {
-                return;
-            }
-
-            if (withinDebounce)
-            {
-                return;
-            }
+            return;
         }
 
         SpeechRouter.Speak(utterance, narrationEvent.Priority, narrationEvent.Interrupt);

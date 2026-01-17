@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- Example: D:\Games\TheLongDark -->
+    <TLD_DIR>PUT_YOUR_TLD_INSTALL_PATH_HERE</TLD_DIR>
+    <ML_IL2CPP_DIR>$(TLD_DIR)\MelonLoader\Il2CppAssemblies</ML_IL2CPP_DIR>
+    <ML_NET6_DIR>$(TLD_DIR)\MelonLoader\net6</ML_NET6_DIR>
+  </PropertyGroup>
+</Project>

@@ -134,6 +134,11 @@ internal static class InventoryItemResolver
                          || string.Equals(role, "Button", StringComparison.Ordinal);
 
         var itemReference = FindItemReference(selected);
+        if (isListItem && itemReference is null)
+        {
+            return null;
+        }
+
         if (!isListItem && context == InventoryItemContext.Unknown && itemReference is null)
         {
             return null;

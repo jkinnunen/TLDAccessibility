@@ -6,7 +6,7 @@ namespace TLDAccessibility.Speech;
 
 public sealed class SapiSpeechService : ISpeechService, ICompletableSpeechService, IDisposable
 {
-    private readonly SpeechSynthesizer? _synthesizer;
+    private readonly SpeechSynthesizer _synthesizer;
     private readonly SpeechSettings _settings;
     private bool _disposed;
     private string _voiceName = string.Empty;
@@ -126,7 +126,7 @@ public sealed class SapiSpeechService : ISpeechService, ICompletableSpeechServic
         _voiceName = voiceMatch;
     }
 
-    private void HandleSpeakCompleted(object? sender, SpeakCompletedEventArgs args)
+    private void HandleSpeakCompleted(object sender, SpeakCompletedEventArgs args)
     {
         if (args.Cancelled)
         {

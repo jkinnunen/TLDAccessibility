@@ -5,7 +5,7 @@ namespace TLDAccessibility.Diagnostics;
 public static class ModLogger
 {
     private static readonly object SyncRoot = new();
-    private static RollingFileLogger? _fileLogger;
+    private static RollingFileLogger _fileLogger;
     private static bool _initialized;
 
     public static void Initialize()
@@ -55,7 +55,7 @@ public static class ModLogger
 #endif
     }
 
-    private static void Write(string level, string message, Action<string>? melonSink)
+    private static void Write(string level, string message, Action<string> melonSink)
     {
         Initialize();
 

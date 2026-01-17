@@ -8,9 +8,9 @@ namespace TLDAccessibility;
 
 public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
 {
-    private NarrationController? _narrationController;
-    private HotkeyDispatcher? _hotkeyDispatcher;
-    private AccessibilityCommandHandlers? _commandHandlers;
+    private NarrationController _narrationController;
+    private HotkeyDispatcher _hotkeyDispatcher;
+    private AccessibilityCommandHandlers _commandHandlers;
 
     public override void OnInitializeMelon()
     {

@@ -11,31 +11,46 @@ public sealed class AccessibleElement
 
     public string ToSpeechString()
     {
+        return ToSpeechString(verbosityLevel: 3, includeDiagnostics: false);
+    }
+
+    public string ToSpeechString(int verbosityLevel, bool includeDiagnostics)
+    {
         var parts = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(Name))
         {
             parts.Add(Name);
         }
-
-        if (!string.IsNullOrWhiteSpace(Role))
+        else if (!string.IsNullOrWhiteSpace(Role))
         {
             parts.Add(Role);
         }
 
-        if (!string.IsNullOrWhiteSpace(State))
+        if (verbosityLevel >= 3)
         {
-            parts.Add(State);
+            if (!string.IsNullOrWhiteSpace(State))
+            {
+                parts.Add(State);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Value))
+            {
+                parts.Add(Value);
+            }
         }
 
-        if (!string.IsNullOrWhiteSpace(Value))
+        if (verbosityLevel >= 5 && includeDiagnostics)
         {
-            parts.Add(Value);
-        }
+            if (!string.IsNullOrWhiteSpace(Hint))
+            {
+                parts.Add(Hint);
+            }
 
-        if (!string.IsNullOrWhiteSpace(Hint))
-        {
-            parts.Add(Hint);
+            if (!string.IsNullOrWhiteSpace(Path))
+            {
+                parts.Add($"Path {Path}");
+            }
         }
 
         return string.Join(", ", parts);

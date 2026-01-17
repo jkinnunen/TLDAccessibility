@@ -26,7 +26,7 @@ Each entry in `profiles` has the following structure:
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `backendMode` | string | yes | `Auto`, `ScreenReader`, or `SAPI5`. |
+| `backendMode` | string | yes | `auto`, `screenReader`, or `sapi5`. |
 | `sapi5VoiceName` | string | yes | Voice name to select (empty uses default). |
 | `sapi5Rate` | int | yes | Speech rate (SAPI5 standard range, usually `-10..10`). |
 | `sapi5Volume` | int | yes | Volume `0..100`. |
@@ -59,7 +59,7 @@ Each hotkey has the same shape:
 | `keybind` | string | yes | Keybind string. |
 
 Hotkeys:
-`repeatLast`, `stopSpeech`, `readScreen`, `readStatusSummary`.
+`repeatLast`, `stopSpeech`, `readScreen`, `readStatusSummary`, `dumpDiagnostics`.
 
 ## Example
 
@@ -69,7 +69,7 @@ Hotkeys:
     {
       "name": "Default",
       "speech": {
-        "backendMode": "Auto",
+        "backendMode": "auto",
         "sapi5VoiceName": "",
         "sapi5Rate": 0,
         "sapi5Volume": 100
@@ -91,7 +91,8 @@ Hotkeys:
         "repeatLast": { "enabled": true, "keybind": "F9" },
         "stopSpeech": { "enabled": true, "keybind": "F10" },
         "readScreen": { "enabled": true, "keybind": "F6" },
-        "readStatusSummary": { "enabled": true, "keybind": "F7" }
+        "readStatusSummary": { "enabled": true, "keybind": "F7" },
+        "dumpDiagnostics": { "enabled": false, "keybind": "" }
       }
     }
   ],

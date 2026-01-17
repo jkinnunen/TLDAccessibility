@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using TLDAccessibility.Diagnostics;
 
 namespace TLDAccessibility.Settings;
@@ -7,7 +8,8 @@ public static class SettingsManager
 {
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
     {
-        WriteIndented = true
+        WriteIndented = true,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
     };
 
     private static readonly object SyncRoot = new();

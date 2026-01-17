@@ -1,0 +1,34 @@
+{
+  "profiles": [
+    {
+      "name": "Default",
+      "speech": {
+        "backendMode": "auto",
+        "sapi5VoiceName": "",
+        "sapi5Rate": 0,
+        "sapi5Volume": 100
+      },
+      "verbosityLevel": 3,
+      "categories": {
+        "hud": { "enabled": true, "debounceMilliseconds": 250 },
+        "inventory": { "enabled": true, "debounceMilliseconds": 250 },
+        "ui": { "enabled": true, "debounceMilliseconds": 250 },
+        "world": { "enabled": true, "debounceMilliseconds": 250 },
+        "combat": { "enabled": true, "debounceMilliseconds": 250 },
+        "dialog": { "enabled": true, "debounceMilliseconds": 250 },
+        "notifications": { "enabled": true, "debounceMilliseconds": 250 }
+      },
+      "interruptPolicy": {
+        "allowInterruptByHigherPriority": true
+      },
+      "hotkeys": {
+        "repeatLast": { "enabled": true, "keybind": "F9" },
+        "stopSpeech": { "enabled": true, "keybind": "F10" },
+        "readScreen": { "enabled": true, "keybind": "F6" },
+        "readStatusSummary": { "enabled": true, "keybind": "F7" },
+        "dumpDiagnostics": { "enabled": false, "keybind": "" }
+      }
+    }
+  ],
+  "activeProfileName": "Default"
+}

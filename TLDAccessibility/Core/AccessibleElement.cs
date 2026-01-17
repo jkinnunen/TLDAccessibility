@@ -8,6 +8,7 @@ public sealed class AccessibleElement
     public string State { get; init; } = string.Empty;
     public string Hint { get; init; } = string.Empty;
     public string Path { get; init; } = string.Empty;
+    public InventoryItemDetails ItemDetails { get; init; }
 
     public string ToSpeechString()
     {
@@ -16,6 +17,27 @@ public sealed class AccessibleElement
 
     public string ToSpeechString(int verbosityLevel, bool includeDiagnostics)
     {
+        var inventorySpeech = ItemDetails?.ToSpeechString(verbosityLevel);
+        if (!string.IsNullOrWhiteSpace(inventorySpeech))
+        {
+            var parts = new List<string> { inventorySpeech };
+
+            if (verbosityLevel >= 5 && includeDiagnostics)
+            {
+                if (!string.IsNullOrWhiteSpace(Hint))
+                {
+                    parts.Add(Hint);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Path))
+                {
+                    parts.Add($"Path {Path}");
+                }
+            }
+
+            return string.Join(", ", parts);
+        }
+
         var parts = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(Name))

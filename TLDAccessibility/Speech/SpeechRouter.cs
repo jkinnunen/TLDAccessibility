@@ -39,8 +39,6 @@ public static class SpeechRouter
                 return;
             }
 
-            _lastSpokenUtterance = text;
-
             var shouldInterrupt = interrupt || (AllowInterruptByHigherPriority && priority < _currentPriority);
             if (_isSpeaking && shouldInterrupt)
             {
@@ -205,6 +203,7 @@ public static class SpeechRouter
         Queue.RemoveAt(0);
         _isSpeaking = true;
         _currentPriority = request.Priority;
+        _lastSpokenUtterance = request.Text;
         _speechService.Speak(request.Text, request.Priority, interrupt: false);
 
         if (_completableSpeechService is null)

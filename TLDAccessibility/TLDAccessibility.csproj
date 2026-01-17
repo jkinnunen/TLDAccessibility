@@ -7,6 +7,14 @@
     <RootNamespace>TLDAccessibility</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll')">true</HasTldRefs>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(HasTldRefs)' == 'true'">
+    <DefineConstants>$(DefineConstants);HAS_TLD_REFS</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="Interop\Tolk.dll" Condition="Exists('Interop\Tolk.dll')"
           CopyToOutputDirectory="PreserveNewest"
@@ -17,7 +25,7 @@
     <PackageReference Include="System.Speech" Version="10.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(HasTldRefs)' == 'true'">
     <!-- MelonLoader -->
     <Reference Include="MelonLoader">
       <HintPath>$(ML_NET6_DIR)\MelonLoader.dll</HintPath>

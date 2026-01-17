@@ -17,5 +17,37 @@
     <PackageReference Include="System.Speech" Version="10.0.2" />
   </ItemGroup>
 
-  <!-- MelonLoader stubs removed; reference the real MelonLoader assembly from the build environment. -->
+  <ItemGroup>
+    <!-- MelonLoader -->
+    <Reference Include="MelonLoader">
+      <HintPath>$(ML_NET6_DIR)\MelonLoader.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Core Unity modules -->
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(ML_IL2CPP_DIR)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- uGUI + EventSystems -->
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ML_IL2CPP_DIR)\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.EventSystems">
+      <HintPath>$(ML_IL2CPP_DIR)\UnityEngine.EventSystems.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- TextMeshPro -->
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
 </Project>

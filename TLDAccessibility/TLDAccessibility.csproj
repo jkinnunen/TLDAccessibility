@@ -2,13 +2,15 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
     <AssemblyName>TLDAccessibility</AssemblyName>
     <RootNamespace>TLDAccessibility</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
     <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll')">true</HasTldRefs>
+    <HasTmpPro Condition="Exists('$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll')">true</HasTmpPro>
     <HasMelonLoader Condition="Exists('$(ML_NET6_DIR)\MelonLoader.dll')">true</HasMelonLoader>
   </PropertyGroup>
 
@@ -17,6 +19,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(HasMelonLoader)' == 'true'">
     <DefineConstants>$(DefineConstants);HAS_MELONLOADER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(HasTmpPro)' == 'true'">
+    <DefineConstants>$(DefineConstants);HAS_TMPRO</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -59,7 +64,7 @@
     </Reference>
 
     <!-- TextMeshPro -->
-    <Reference Include="Unity.TextMeshPro">
+    <Reference Include="Unity.TextMeshPro" Condition="'$(HasTmpPro)' == 'true'">
       <HintPath>$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
     </Reference>

@@ -57,7 +57,7 @@ public static class StatusSummaryProvider
 
     private static string FormatTemperature(float value)
     {
-        if (value <= 1.01f)
+        if (value is >= 0f and <= 1.01f)
         {
             var percent = value * 100f;
             return $"Temperature {Math.Round(percent)} percent";

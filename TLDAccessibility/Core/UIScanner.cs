@@ -45,6 +45,11 @@ public sealed class UIScanner
         var label = ResolveLabel(selected);
         var value = ResolveValue(selected, role);
         var state = ResolveState(selected, role);
+#if HAS_TLD_REFS
+        var itemDetails = InventoryItemResolver.TryResolve(selected, label, role);
+#else
+        InventoryItemDetails itemDetails = null;
+#endif
 
         return new AccessibleElement
         {
@@ -52,6 +57,7 @@ public sealed class UIScanner
             Name = label,
             Value = value,
             State = state,
+            ItemDetails = itemDetails,
             Path = path
         };
     }

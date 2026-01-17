@@ -81,7 +81,7 @@ public sealed class NarrationController
 
         var narrationEvent = new NarrationEvent
         {
-            Category = NarrationCategory.UI,
+            Category = ResolveCategory(focusedElement),
             Element = focusedElement,
             Priority = SpeechPriority.Normal,
             Interrupt = true,
@@ -136,6 +136,14 @@ public sealed class NarrationController
         }
 
         return narrationEvent.Message ?? string.Empty;
+    }
+
+    private static NarrationCategory ResolveCategory(AccessibleElement focusedElement)
+    {
+        var context = focusedElement?.ItemDetails?.Context ?? InventoryItemContext.Unknown;
+        return context == InventoryItemContext.Inventory || context == InventoryItemContext.Container
+            ? NarrationCategory.Inventory
+            : NarrationCategory.UI;
     }
 
     private static bool AreElementsEquivalent(AccessibleElement left, AccessibleElement right)

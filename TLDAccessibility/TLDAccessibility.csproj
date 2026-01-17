@@ -9,10 +9,14 @@
 
   <PropertyGroup>
     <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll')">true</HasTldRefs>
+    <HasMelonLoader Condition="Exists('$(ML_NET6_DIR)\MelonLoader.dll')">true</HasMelonLoader>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(HasTldRefs)' == 'true'">
     <DefineConstants>$(DefineConstants);HAS_TLD_REFS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(HasMelonLoader)' == 'true'">
+    <DefineConstants>$(DefineConstants);HAS_MELONLOADER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,13 +29,15 @@
     <PackageReference Include="System.Speech" Version="10.0.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(HasTldRefs)' == 'true'">
+  <ItemGroup Condition="'$(HasMelonLoader)' == 'true'">
     <!-- MelonLoader -->
     <Reference Include="MelonLoader">
       <HintPath>$(ML_NET6_DIR)\MelonLoader.dll</HintPath>
       <Private>false</Private>
     </Reference>
+  </ItemGroup>
 
+  <ItemGroup Condition="'$(HasTldRefs)' == 'true'">
     <!-- Core Unity modules -->
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll</HintPath>

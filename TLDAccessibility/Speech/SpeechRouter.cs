@@ -12,6 +12,7 @@ public static class SpeechRouter
     private static bool _isSpeaking;
     private static SpeechPriority _currentPriority = SpeechPriority.Normal;
     private static bool _hasSelfTested;
+    private static string? _lastSpokenUtterance;
 
     public static SpeechBackendMode BackendMode { get; private set; } = SpeechBackendMode.Auto;
     public static int VerbosityLevel { get; private set; } = 3;
@@ -38,6 +39,8 @@ public static class SpeechRouter
                 return;
             }
 
+            _lastSpokenUtterance = text;
+
             var shouldInterrupt = interrupt || (AllowInterruptByHigherPriority && priority < _currentPriority);
             if (_isSpeaking && shouldInterrupt)
             {
@@ -55,6 +58,23 @@ public static class SpeechRouter
         {
             StopInternal();
         }
+    }
+
+    public static bool TryRepeatLast()
+    {
+        string? lastUtterance;
+        lock (SyncRoot)
+        {
+            lastUtterance = _lastSpokenUtterance;
+        }
+
+        if (string.IsNullOrWhiteSpace(lastUtterance))
+        {
+            return false;
+        }
+
+        Speak(lastUtterance, SpeechPriority.Normal, interrupt: true);
+        return true;
     }
 
     public static bool IsAvailable => _speechService.IsAvailable;

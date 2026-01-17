@@ -9,6 +9,7 @@ public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
 {
     private NarrationController? _narrationController;
     private HotkeyDispatcher? _hotkeyDispatcher;
+    private AccessibilityCommandHandlers? _commandHandlers;
 
     public override void OnInitializeMelon()
     {
@@ -19,6 +20,8 @@ public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
 
         _narrationController = new NarrationController();
         _hotkeyDispatcher = new HotkeyDispatcher();
+        _commandHandlers = new AccessibilityCommandHandlers(CommandBus.Instance);
+        _commandHandlers.Register();
 
         ModLogger.Info("TLDAccessibility initialized");
     }

@@ -105,6 +105,8 @@ public static class SettingsManager
 
         imported.Normalize();
 
+        var importedActiveProfile = imported.ActiveProfileName;
+
         lock (SyncRoot)
         {
             if (replaceExisting)
@@ -119,9 +121,10 @@ public static class SettingsManager
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(CurrentSettings.ActiveProfileName))
+            if (!string.IsNullOrWhiteSpace(importedActiveProfile)
+                && CurrentSettings.FindProfile(importedActiveProfile) is not null)
             {
-                CurrentSettings.ActiveProfileName = imported.ActiveProfileName;
+                CurrentSettings.ActiveProfileName = importedActiveProfile;
             }
 
             CurrentSettings.Normalize();

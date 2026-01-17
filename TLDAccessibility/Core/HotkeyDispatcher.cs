@@ -9,7 +9,7 @@ public sealed class HotkeyDispatcher
     private const int DebounceMilliseconds = 250;
     private readonly Dictionary<AccessibilityCommand, long> _lastCommandTicks = new();
 
-    public Func<string, bool>? HotkeyPressed { get; set; }
+    public Func<string, bool> HotkeyPressed { get; set; }
 
     public void Tick()
     {

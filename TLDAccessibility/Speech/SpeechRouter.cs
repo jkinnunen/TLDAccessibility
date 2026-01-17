@@ -8,11 +8,11 @@ public static class SpeechRouter
     private static readonly object SyncRoot = new();
     private static readonly List<SpeechRequest> Queue = new();
     private static ISpeechService _speechService = new NoOpSpeechService();
-    private static ICompletableSpeechService? _completableSpeechService;
+    private static ICompletableSpeechService _completableSpeechService;
     private static bool _isSpeaking;
     private static SpeechPriority _currentPriority = SpeechPriority.Normal;
     private static bool _hasSelfTested;
-    private static string? _lastSpokenUtterance;
+    private static string _lastSpokenUtterance;
 
     public static SpeechBackendMode BackendMode { get; private set; } = SpeechBackendMode.Auto;
     public static int VerbosityLevel { get; private set; } = 3;
@@ -62,7 +62,7 @@ public static class SpeechRouter
 
     public static bool TryRepeatLast()
     {
-        string? lastUtterance;
+        string lastUtterance;
         lock (SyncRoot)
         {
             lastUtterance = _lastSpokenUtterance;
@@ -245,7 +245,7 @@ public static class SpeechRouter
         }
     }
 
-    private static void HandleSpeechCompleted(object? sender, EventArgs args)
+    private static void HandleSpeechCompleted(object sender, EventArgs args)
     {
         OnSpeechCompleted();
     }

@@ -75,7 +75,7 @@ internal sealed class JsonSettingsProvider : ISettingsProvider
         }
     }
 
-    private SettingsModel ReadSettingsFromDisk(SettingsModel? fallback)
+    private SettingsModel ReadSettingsFromDisk(SettingsModel fallback)
     {
         try
         {

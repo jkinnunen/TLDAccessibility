@@ -27,7 +27,7 @@ public sealed class SettingsModel
         return FindProfile(ActiveProfileName) ?? Profiles.FirstOrDefault() ?? SettingsProfile.CreateDefault();
     }
 
-    public SettingsProfile? FindProfile(string profileName)
+    public SettingsProfile FindProfile(string profileName)
     {
         if (string.IsNullOrWhiteSpace(profileName))
         {

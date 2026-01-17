@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll')">true</HasTldRefs>
+    <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.UI.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.EventSystems.dll')">true</HasTldRefs>
     <HasTmpPro Condition="Exists('$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll')">true</HasTmpPro>
     <HasMelonLoader Condition="Exists('$(ML_NET6_DIR)\MelonLoader.dll')">true</HasMelonLoader>
   </PropertyGroup>

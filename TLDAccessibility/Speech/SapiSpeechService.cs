@@ -128,6 +128,11 @@ public sealed class SapiSpeechService : ISpeechService, ICompletableSpeechServic
 
     private void HandleSpeakCompleted(object? sender, SpeakCompletedEventArgs args)
     {
+        if (args.Cancelled)
+        {
+            return;
+        }
+
         SpeechCompleted.Invoke(this, EventArgs.Empty);
     }
 }

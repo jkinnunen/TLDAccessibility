@@ -27,6 +27,7 @@ public sealed class GameAdapterManager
 
         var bindings = GameAdapterBindings.Discover();
         bindings.LogSummary();
+        DiagnosticsManager.UpdateAdapterBindings(bindings);
         StatusSummaryProvider.SetBinding(bindings.StatusSummary);
 
         var hasInteraction = bindings.InteractionPrompt?.UpdateMethod is not null;

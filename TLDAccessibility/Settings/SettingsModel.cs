@@ -241,6 +241,7 @@ public sealed class HotkeySettings
     public HotkeySetting StopSpeech { get; set; } = new();
     public HotkeySetting ReadScreen { get; set; } = new();
     public HotkeySetting ReadStatusSummary { get; set; } = new();
+    public HotkeySetting DumpDiagnostics { get; set; } = new();
 
     public static HotkeySettings CreateDefault()
     {
@@ -249,7 +250,8 @@ public sealed class HotkeySettings
             RepeatLast = new HotkeySetting { Enabled = true, Keybind = "F9" },
             StopSpeech = new HotkeySetting { Enabled = true, Keybind = "F10" },
             ReadScreen = new HotkeySetting { Enabled = true, Keybind = "F6" },
-            ReadStatusSummary = new HotkeySetting { Enabled = true, Keybind = "F7" }
+            ReadStatusSummary = new HotkeySetting { Enabled = true, Keybind = "F7" },
+            DumpDiagnostics = new HotkeySetting { Enabled = false, Keybind = string.Empty }
         };
     }
 
@@ -259,6 +261,7 @@ public sealed class HotkeySettings
         StopSpeech ??= new HotkeySetting();
         ReadScreen ??= new HotkeySetting();
         ReadStatusSummary ??= new HotkeySetting();
+        DumpDiagnostics ??= new HotkeySetting();
     }
 
     public HotkeySettings DeepClone()
@@ -268,7 +271,8 @@ public sealed class HotkeySettings
             RepeatLast = RepeatLast.DeepClone(),
             StopSpeech = StopSpeech.DeepClone(),
             ReadScreen = ReadScreen.DeepClone(),
-            ReadStatusSummary = ReadStatusSummary.DeepClone()
+            ReadStatusSummary = ReadStatusSummary.DeepClone(),
+            DumpDiagnostics = DumpDiagnostics.DeepClone()
         };
     }
 }

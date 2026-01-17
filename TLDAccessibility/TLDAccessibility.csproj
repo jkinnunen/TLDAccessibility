@@ -10,4 +10,6 @@
   <ItemGroup>
     <None Include="Interop\\Tolk.dll" Condition="Exists('Interop\\Tolk.dll')" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
+
+  <!-- MelonLoader stubs removed; reference the real MelonLoader assembly from the build environment. -->
 </Project>

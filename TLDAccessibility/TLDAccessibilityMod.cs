@@ -1,3 +1,4 @@
+#if HAS_TLD_REFS
 using TLDAccessibility.Core;
 using TLDAccessibility.Diagnostics;
 using TLDAccessibility.Settings;
@@ -32,3 +33,10 @@ public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
         _hotkeyDispatcher?.Tick();
     }
 }
+#else
+namespace TLDAccessibility;
+
+public sealed class TLDAccessibilityMod
+{
+}
+#endif

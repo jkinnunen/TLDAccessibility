@@ -1,3 +1,4 @@
+#if HAS_TLD_REFS
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -224,3 +225,17 @@ public sealed class UIScanner
         return string.Empty;
     }
 }
+#else
+namespace TLDAccessibility.Core;
+
+public sealed class UIScanner
+{
+    public AccessibleScreen Scan(bool includeFallbackCanvas)
+    {
+        return new AccessibleScreen
+        {
+            Timestamp = DateTimeOffset.UtcNow
+        };
+    }
+}
+#endif

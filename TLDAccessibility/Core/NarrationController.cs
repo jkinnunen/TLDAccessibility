@@ -1,3 +1,4 @@
+#if HAS_TLD_REFS
 using TLDAccessibility.Speech;
 using UnityEngine;
 
@@ -49,3 +50,13 @@ public sealed class NarrationController
         SpeechRouter.Speak(utterance, SpeechPriority.Normal, interrupt: true);
     }
 }
+#else
+namespace TLDAccessibility.Core;
+
+public sealed class NarrationController
+{
+    public void Tick()
+    {
+    }
+}
+#endif

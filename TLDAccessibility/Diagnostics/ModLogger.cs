@@ -30,27 +30,39 @@ public static class ModLogger
 
     public static void Info(string message)
     {
+#if HAS_MELONLOADER
         Write("INFO", message, MelonLoader.MelonLogger.Msg);
+#else
+        Write("INFO", message, null);
+#endif
     }
 
     public static void Warn(string message)
     {
+#if HAS_MELONLOADER
         Write("WARN", message, MelonLoader.MelonLogger.Warning);
+#else
+        Write("WARN", message, null);
+#endif
     }
 
     public static void Error(string message)
     {
+#if HAS_MELONLOADER
         Write("ERROR", message, MelonLoader.MelonLogger.Error);
+#else
+        Write("ERROR", message, null);
+#endif
     }
 
-    private static void Write(string level, string message, Action<string> melonSink)
+    private static void Write(string level, string message, Action<string>? melonSink)
     {
         Initialize();
 
         var timestamp = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
         var line = $"[{timestamp}] [{level}] {message}";
 
-        melonSink(line);
+        melonSink?.Invoke(line);
         _fileLogger?.WriteLine(line);
     }
 }

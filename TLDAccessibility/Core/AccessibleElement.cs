@@ -38,27 +38,27 @@ public sealed class AccessibleElement
             return string.Join(", ", parts);
         }
 
-        var parts = new List<string>();
+        var fallbackParts = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(Name))
         {
-            parts.Add(Name);
+            fallbackParts.Add(Name);
         }
         else if (!string.IsNullOrWhiteSpace(Role))
         {
-            parts.Add(Role);
+            fallbackParts.Add(Role);
         }
 
         if (verbosityLevel >= 3)
         {
             if (!string.IsNullOrWhiteSpace(State))
             {
-                parts.Add(State);
+                fallbackParts.Add(State);
             }
 
             if (!string.IsNullOrWhiteSpace(Value))
             {
-                parts.Add(Value);
+                fallbackParts.Add(Value);
             }
         }
 
@@ -66,15 +66,15 @@ public sealed class AccessibleElement
         {
             if (!string.IsNullOrWhiteSpace(Hint))
             {
-                parts.Add(Hint);
+                fallbackParts.Add(Hint);
             }
 
             if (!string.IsNullOrWhiteSpace(Path))
             {
-                parts.Add($"Path {Path}");
+                fallbackParts.Add($"Path {Path}");
             }
         }
 
-        return string.Join(", ", parts);
+        return string.Join(", ", fallbackParts);
     }
 }

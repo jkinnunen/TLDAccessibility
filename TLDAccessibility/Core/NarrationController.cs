@@ -17,6 +17,8 @@ public sealed class NarrationController
         var focusedElement = screen.FocusedElement;
         if (focusedElement is null || string.IsNullOrWhiteSpace(focusedElement.Path))
         {
+            _pendingFocusPath = null;
+            _lastSpokenFocusPath = null;
             return;
         }
 

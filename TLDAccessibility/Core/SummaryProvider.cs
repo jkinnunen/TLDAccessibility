@@ -39,7 +39,7 @@ public static class SummaryProvider
 
     public static string GetStatusSummary()
     {
-        return "Status summary is not available yet.";
+        return StatusSummaryProvider.GetStatusSummary();
     }
 
     private static string GetScreenSummaryDetails(AccessibleScreen screen)

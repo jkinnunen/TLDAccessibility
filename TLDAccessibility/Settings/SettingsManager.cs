@@ -196,7 +196,7 @@ public static class SettingsManager
 
     private static string GetJsonSettingsPath()
     {
-        return Path.Combine(AppContext.BaseDirectory, "Mods", "TLDAccessibility", "settings.json");
+        return Path.Combine(AppContext.BaseDirectory, "UserData", "TLDAccessibility", "settings.json");
     }
 }
 

@@ -69,4 +69,11 @@
       <Private>false</Private>
     </Reference>
   </ItemGroup>
+
+  <Target Name="CleanOutputAndIntermediate" AfterTargets="Clean">
+    <Message Importance="High" Text="Removing output folder at $(BaseOutputPath)" Condition="Exists('$(BaseOutputPath)')" />
+    <RemoveDir Directories="$(BaseOutputPath)" Condition="Exists('$(BaseOutputPath)')" />
+    <Message Importance="High" Text="Removing intermediate folder at $(BaseIntermediateOutputPath)" Condition="Exists('$(BaseIntermediateOutputPath)')" />
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" Condition="Exists('$(BaseIntermediateOutputPath)')" />
+  </Target>
 </Project>

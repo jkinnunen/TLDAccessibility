@@ -15,6 +15,7 @@ public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
 
     public override void OnInitializeMelon()
     {
+        ModLogger.Info("TLDAccessibility: OnInitializeMelon entered");
         ModLogger.Initialize();
         SettingsManager.Initialize();
         SpeechRouter.Initialize();

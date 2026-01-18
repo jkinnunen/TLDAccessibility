@@ -46,6 +46,13 @@ UserData/
 
 ## Troubleshooting
 
+### Load verification checklist
+
+- Check `<TLD>\MelonLoader\Latest.log`.
+- Search for `TLDAccessibility` and `Loading Melons`.
+- If those entries are not present at all, the mod was not discovered (likely missing attributes or installed in the wrong folder).
+- If the entries are present but show errors, paste the exception section into an issue.
+
 - **No speech output**:
   - Verify MelonLoader 0.7.2 nightly is installed and the mod loads without errors.
   - Ensure the .NET 6 runtime is installed.

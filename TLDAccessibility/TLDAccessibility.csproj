@@ -11,7 +11,7 @@
   <PropertyGroup>
     <HasTldRefs Condition="Exists('$(ML_IL2CPP_DIR)\UnityEngine.CoreModule.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.UI.dll') and Exists('$(ML_IL2CPP_DIR)\UnityEngine.EventSystems.dll')">true</HasTldRefs>
     <HasTmpPro Condition="Exists('$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll')">true</HasTmpPro>
-    <HasMelonLoader Condition="Exists('$(ML_NET6_DIR)\MelonLoader.dll')">true</HasMelonLoader>
+    <HasMelonLoader Condition="Exists('$(TLD_DIR)\MelonLoader\net6\MelonLoader.dll')">true</HasMelonLoader>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(HasTldRefs)' == 'true'">
@@ -40,7 +40,7 @@
   <ItemGroup Condition="'$(HasMelonLoader)' == 'true'">
     <!-- MelonLoader -->
     <Reference Include="MelonLoader">
-      <HintPath>$(ML_NET6_DIR)\MelonLoader.dll</HintPath>
+      <HintPath>$(TLD_DIR)\MelonLoader\net6\MelonLoader.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

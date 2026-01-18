@@ -22,16 +22,15 @@ TLDAccessibility provides screen reader and SAPI5 narration for The Long Dark (U
 1. Install MelonLoader 0.7.2 nightly for The Long Dark (Unity 6).
 2. Install the .NET 6 runtime.
 3. (Optional) Install ModSettings.
-4. Copy the contents of `dist/TLDAccessibility/` into your `Mods/TLDAccessibility/` folder so that:
+4. Copy the contents of `dist/` into your game folder so that the files land in the **root** `Mods` directory (MelonLoader only scans `Mods/` and does **not** detect subfolders like `Mods/TLDAccessibility/`). Place `TLDAccessibility.dll` directly in `<TLD>\Mods\`.
 
 ```
 Mods/
+  TLDAccessibility.dll
+  Tolk.dll (optional, only if using screen readers)
+UserData/
   TLDAccessibility/
-    TLDAccessibility.dll
-    Tolk.dll (optional, only if using screen readers)
     settings.json
-    settings.schema.md
-    README.md
 ```
 
 ## Usage
@@ -53,7 +52,7 @@ Mods/
   - For screen reader output, confirm `Tolk.dll` is present and your screen reader is running.
   - For SAPI5, confirm Windows voices are installed and `speech.backendMode` is set to `sapi5`.
 - **Settings not applying**:
-  - Confirm `Mods/TLDAccessibility/settings.json` is valid JSON.
+  - Confirm `UserData/TLDAccessibility/settings.json` is valid JSON.
   - If ModSettings is installed, verify it is updated and enabled.
 - **Some UI elements are silent**:
   - Narration coverage is limited to supported UI adapters; some screens and popups are not yet wired.
@@ -63,4 +62,3 @@ Mods/
 - Windows-only (relies on .NET 6, SAPI5, and/or Tolk).
 - Narration coverage is incomplete; some screens may not announce all elements.
 - Screen reader output depends on Tolk support and the screen reader being detected.
-

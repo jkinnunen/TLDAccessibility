@@ -31,9 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Speech" Version="10.0.2" />
   </ItemGroup>
 

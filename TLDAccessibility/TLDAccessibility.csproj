@@ -13,9 +13,6 @@
     <HasTmpPro Condition="Exists('$(ML_IL2CPP_DIR)\Unity.TextMeshPro.dll')">true</HasTmpPro>
     <HasMelonLoader Condition="Exists('$(TLD_DIR)\MelonLoader\net6\MelonLoader.dll')">true</HasMelonLoader>
   </PropertyGroup>
-  <PropertyGroup>
-    <RepoRoot>$(MSBuildProjectDirectory)\..</RepoRoot>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(HasTldRefs)' == 'true'">
     <DefineConstants>$(DefineConstants);HAS_TLD_REFS</DefineConstants>
@@ -73,8 +70,10 @@
     </Reference>
   </ItemGroup>
 
-  <Target Name="CleanDistArtifacts" AfterTargets="Clean">
-    <Message Importance="High" Text="Removing dist folder at $(RepoRoot)\dist" Condition="Exists('$(RepoRoot)\dist')" />
-    <RemoveDir Directories="$(RepoRoot)\dist" Condition="Exists('$(RepoRoot)\dist')" />
+  <Target Name="CleanOutputAndIntermediate" AfterTargets="Clean">
+    <Message Importance="High" Text="Removing output folder at $(BaseOutputPath)" Condition="Exists('$(BaseOutputPath)')" />
+    <RemoveDir Directories="$(BaseOutputPath)" Condition="Exists('$(BaseOutputPath)')" />
+    <Message Importance="High" Text="Removing intermediate folder at $(BaseIntermediateOutputPath)" Condition="Exists('$(BaseIntermediateOutputPath)')" />
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" Condition="Exists('$(BaseIntermediateOutputPath)')" />
   </Target>
 </Project>

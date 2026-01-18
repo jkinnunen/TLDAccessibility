@@ -25,6 +25,7 @@ public static class ModLogger
             var logPath = Path.Combine(AppContext.BaseDirectory, "TLDAccessibility.log");
             _fileLogger = new RollingFileLogger(logPath, maxBytes: 1024 * 1024, maxRolls: 3);
             _initialized = true;
+            ModuleInit.LogBinaryIdentityCheck();
         }
     }
 

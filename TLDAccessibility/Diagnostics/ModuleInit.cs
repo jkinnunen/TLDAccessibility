@@ -1,14 +1,11 @@
-using System.Runtime.CompilerServices;
-using MelonLoader;
+namespace TLDAccessibility.Diagnostics;
 
-namespace TLDAccessibility.Diagnostics
+internal static class ModuleInit
 {
-    internal static class ModuleInit
+    internal static void LogBinaryIdentityCheck()
     {
-        [ModuleInitializer]
-        internal static void Init()
-        {
-            MelonLogger.Msg("TLDAccessibility: ModuleInitializer executed (binary identity check).");
-        }
+#if HAS_MELONLOADER
+        MelonLoader.MelonLogger.Msg("TLDAccessibility: Diagnostics initialized (binary identity check).");
+#endif
     }
 }

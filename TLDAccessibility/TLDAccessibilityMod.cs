@@ -13,6 +13,12 @@ public sealed class TLDAccessibilityMod : MelonLoader.MelonMod
     private AccessibilityCommandHandlers _commandHandlers;
     private GameAdapterManager _gameAdapterManager;
 
+    public TLDAccessibilityMod()
+    {
+        TLDAccessibility.Diagnostics.ModLogger.Initialize();
+        TLDAccessibility.Diagnostics.ModLogger.Info("TLDAccessibilityMod constructor executed");
+    }
+
     public override void OnInitializeMelon()
     {
         ModLogger.Info("TLDAccessibility: OnInitializeMelon entered");
